@@ -9,7 +9,6 @@ const {
   isPresent,
   isEmpty,
   isNone,
-  inject,
   get,
   String: {
     isHTMLSafe
@@ -34,9 +33,11 @@ function emitWarning(msg, meta) {
   }
 }
 
-export function initialize() {
+export function initialize(appInstance) {
+  const i18n = appInstance.__container__.lookup('service:i18n');
+
   ValidatorsMessages.reopen({
-    i18n: inject.service(),
+    i18n,
     _regex: /\{\{(\w+)\}\}|\{(\w+)\}/g,
 
     _prefix: computed('prefix', function() {
